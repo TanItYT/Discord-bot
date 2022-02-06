@@ -1,6 +1,6 @@
 (async () => {
     const Discord = require("discord.js");
-    const mySecret = process.env['DISCORD_BOT_TOKEN']
+    const mySecret = process.env['TOKEN']
     const Database = require("easy-json-database");
     const devMode = typeof __E_IS_DEV !== "undefined" && __E_IS_DEV;
     const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -21,11 +21,6 @@
         partials: ["REACTION"]
     });
 
-    await s4d.client.login((process.env.TOKEN)).catch((e) => {
-        s4d.tokenInvalid = true;
-        s4d.tokenError = e;
-    });
-
     s4d.client.on('messageCreate', async (s4dmessage) => {
         if ((s4dmessage.content) == '*work') {
             s4dmessage.channel.send(String('I\'m working!'));
@@ -35,15 +30,22 @@
         }
         if ((s4dmessage.content) == '*ping') {
             s4dmessage.channel.send(String('Pong!'));
-            await delay(Number(0.1) * 1000);
             s4dmessage.channel.send(String((s4d.client.ws.ping)));
         }
-        if ((s4dmessage.content) == 'bad word') {
+        if ((s4dmessage.content) == '*bad word') {
             s4dmessage.delete();
             s4dmessage.channel.send(String('Just stop!'));
             s4dmessage.channel.send(String((s4dmessage.author.username)));
         }
+        if ((s4dmessage.content) == '*help') {
+            s4dmessage.channel.send(String('Hello! I\'m a discord bot made by TanItYT try some of my commands! *ping *who *bad word *help *work'));
+        }
 
+    });
+
+    await s4d.client.login((process.env.TOKEN)).catch((e) => {
+        s4d.tokenInvalid = true;
+        s4d.tokenError = e;
     });
 
 
