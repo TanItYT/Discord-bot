@@ -80,7 +80,7 @@
         }
         if ((s4dmessage.content) == '*help') {
             s4dmessage.channel.send({
-                content: String('Hello! I\'m a discord bot made by TanItYT try some of my commands! *ping *who *bad word *help *work')
+                content: String('Hello! I\'m a discord bot made by TanItYT try some of my commands! *ping *who *bad word *help *work *uptime')
             });
         }
         if ((s4dmessage.content) == '*uptime') {
