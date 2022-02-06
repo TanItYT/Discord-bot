@@ -1,6 +1,5 @@
 (async () => {
     const Discord = require("discord.js");
-    const mySecret = process.env['TOKEN']
     const Database = require("easy-json-database");
     const devMode = typeof __E_IS_DEV !== "undefined" && __E_IS_DEV;
     const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -21,7 +20,7 @@
         partials: ["REACTION"]
     });
 
-    await s4d.client.login((process.env.TOKEN)).catch((e) => {
+    await s4d.client.login(process.env.TOKEN).catch((e) => {
         s4d.tokenInvalid = true;
         s4d.tokenError = e;
     });
@@ -34,13 +33,12 @@
             s4dmessage.channel.send(String('Hello! I\'m a discord bot made by TanItYT! I\'m still in development and will improve!'));
         }
         if ((s4dmessage.content) == '*ping') {
-            s4dmessage.channel.send(String('Pong!'));
-            s4dmessage.channel.send(String((s4d.client.ws.ping)));
+            s4dmessage.channel.send(String(('Pong! ' + String(s4d.client.ws.ping))));
         }
         if ((s4dmessage.content) == '*bad word') {
             s4dmessage.delete();
             (s4dmessage.member).send(String('Just stop!'));
-            s4d.client.channels.cache.get('921786095161704449').send(String((String(s4dmessage.member) + 'Has said a bad word')));
+            s4d.client.channels.cache.get('921786095161704449').send(String((String(s4dmessage.member) + ' Has said a bad word')));
         }
         if ((s4dmessage.content) == '*help') {
             s4dmessage.channel.send(String('Hello! I\'m a discord bot made by TanItYT try some of my commands! *ping *who *bad word *help *work'));
