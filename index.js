@@ -21,6 +21,11 @@
         partials: ["REACTION"]
     });
 
+    await s4d.client.login((process.env.TOKEN)).catch((e) => {
+        s4d.tokenInvalid = true;
+        s4d.tokenError = e;
+    });
+
     s4d.client.on('messageCreate', async (s4dmessage) => {
         if ((s4dmessage.content) == '*work') {
             s4dmessage.channel.send(String('I\'m working!'));
@@ -34,18 +39,13 @@
         }
         if ((s4dmessage.content) == '*bad word') {
             s4dmessage.delete();
-            s4dmessage.channel.send(String('Just stop!'));
-            s4dmessage.channel.send(String((s4dmessage.author.username)));
+            (s4dmessage.member).send(String('Just stop!'));
+            s4d.client.channels.cache.get('921786095161704449').send(String((String(s4dmessage.member) + 'Has said a bad word')));
         }
         if ((s4dmessage.content) == '*help') {
             s4dmessage.channel.send(String('Hello! I\'m a discord bot made by TanItYT try some of my commands! *ping *who *bad word *help *work'));
         }
 
-    });
-
-    await s4d.client.login((process.env.TOKEN)).catch((e) => {
-        s4d.tokenInvalid = true;
-        s4d.tokenError = e;
     });
 
 
