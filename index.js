@@ -18,6 +18,7 @@
     let dootabase = new Database("./database.json")
     const os = require("os-utils");
     const lyricsFinder = require('lyrics-finder');
+    let https = require("https")
     require('events').EventEmitter.defaultMaxListeners = 50;
     let fs = require('fs');
     const devMode = typeof __E_IS_DEV !== "undefined" && __E_IS_DEV;
@@ -80,7 +81,7 @@
         }
         if ((s4dmessage.content) == '*help') {
             s4dmessage.channel.send({
-                content: String('Hello! I\'m a discord bot made by TanItYT try some of my commands! *ping *who *bad word *help *work *uptime')
+                content: String('Hello! I\'m a discord bot made by TanItYT try some of my commands! *ping *who *bad word *help *work')
             });
         }
         if ((s4dmessage.content) == '*uptime') {
@@ -91,14 +92,30 @@
 
     });
 
+    s4d.client.on('ready', async () => {
+
+        while (s4d.client && s4d.client.token) {
+            await delay(50);
+            s4d.client.user.setPresence({
+                status: "online",
+                activities: [{
+                    name: 'https://youtube.com/tanityt',
+                    type: "WATCHING"
+                }]
+            });
+            await delay(Number(2) * 1000);
+            s4d.client.user.setPresence({
+                status: "online",
+                activities: [{
+                    name: 'https://twitter.com/TanitYTreal',
+                    type: "WATCHING"
+                }]
+            });
+
+            console.log('ran')
+        }
+
+    });
+
     return s4d
 })();
-const express = require('express')
-const app = express();
-const port = 3000;
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
-})
