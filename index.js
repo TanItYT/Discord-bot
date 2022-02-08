@@ -41,6 +41,7 @@
             if (!s4d.client.readyTimestamp) throw new Error('You cannot perform message operations while the bot is not connected to the Discord API')
         }
     };
+
     s4d.client = new s4d.Discord.Client({
         intents: [Object.values(s4d.Discord.Intents.FLAGS).reduce((acc, p) => acc | p, 0)],
         partials: ["REACTION", "CHANNEL"]
@@ -119,3 +120,12 @@
 
     return s4d
 })();
+const express = require('express')
+const app = express();
+const port = 3000;
+app.get('/', (req, res) => {
+  res.send('Hello World!')
+})
+app.listen(port, () => {
+  console.log(`Example app listening at http://localhost:${port}`)
+})
