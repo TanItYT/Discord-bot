@@ -12,13 +12,13 @@
   "dependencies": {
     "body-parser": "^1.19.1",
     "discord-logs": "^2.0.1",
-    "discord-player": "^5.2.2",
     "discord.js": "^13.6.0",
     "easy-json-database": "^1.5.0",
     "express": "^4.17.2",
-    "lyrics-finder": "^21.7.0",
     "os-utils": "^0.0.14",
-    "play-dl": "^1.8.6"
+    "play-dl": "^1.8.6",
+    "snakecord": "^1.0.9",
+    "weky": "^3.1.8"
   },
   "devDependencies": {
     "node": "^16.13.2"

@@ -17,7 +17,6 @@
     let logs = require("discord-logs")
     let dootabase = new Database("./database.json")
     const os = require("os-utils");
-    const lyricsFinder = require('lyrics-finder');
     let https = require("https")
     require('events').EventEmitter.defaultMaxListeners = 50;
     let fs = require('fs');
@@ -41,7 +40,6 @@
             if (!s4d.client.readyTimestamp) throw new Error('You cannot perform message operations while the bot is not connected to the Discord API')
         }
     };
-
     s4d.client = new s4d.Discord.Client({
         intents: [Object.values(s4d.Discord.Intents.FLAGS).reduce((acc, p) => acc | p, 0)],
         partials: ["REACTION", "CHANNEL"]
@@ -72,13 +70,13 @@
             });
         }
         if ((s4dmessage.content) == '*bad word') {
-            s4dmessage.delete();
             (s4dmessage.author).send({
-                content: String('Just stop!')
+                content: String(('Hello! Your behavior has been detected as toxic if you believe that this is incorrect please try using a nicer way to say it and not say  ' + String(s4dmessage.content)))
             });
             s4d.client.channels.cache.get('921786095161704449').send({
-                content: String((String(s4dmessage.author) + ' Has said a bad word'))
+                content: String(([s4dmessage.author, ' Has said a bad word ', s4dmessage.content].join('')))
             });
+            s4dmessage.delete();
         }
         if ((s4dmessage.content) == '*help') {
             s4dmessage.channel.send({
