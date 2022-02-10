@@ -17,6 +17,7 @@
     let logs = require("discord-logs")
     let dootabase = new Database("./database.json")
     const os = require("os-utils");
+    const ms = require("ms")
     let https = require("https")
     require('events').EventEmitter.defaultMaxListeners = 50;
     let fs = require('fs');
@@ -71,7 +72,7 @@
         }
         if ((s4dmessage.content) == '*bad word') {
             (s4dmessage.author).send({
-                content: String(('Hello! Your behavior has been detected as toxic if you believe that this is incorrect please try using a nicer way to say it and not say  ' + String(s4dmessage.content)))
+                content: String(([':warning: Hello ', s4dmessage.author, ', you sent a message classified as insult in ', s4dmessage.guild, ' saying ', s4dmessage.content, '. Please refrain from this type of language in the future. If this seems like a mistake, try rephrasing what you said to make it less toxic.'].join('')))
             });
             s4d.client.channels.cache.get('921786095161704449').send({
                 content: String(([s4dmessage.author, ' Has said a bad word ', s4dmessage.content].join('')))
