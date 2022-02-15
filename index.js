@@ -16,6 +16,7 @@
     } = require("discord.js")
     let logs = require("discord-logs")
     let dootabase = new Database("./database.json")
+    const akinator = require("discord.js-akinator");
     const os = require("os-utils");
     const ms = require("ms")
     let https = require("https")
@@ -49,6 +50,9 @@
         console.log(s4d.client.user.tag + " is alive!")
     })
     logs(s4d.client);
+    var arguments2, command, gamemode;
+
+
     await s4d.client.login((process.env.TOKEN)).catch((e) => {
         s4d.tokenInvalid = true;
         s4d.tokenError = e;
@@ -81,12 +85,17 @@
         }
         if ((s4dmessage.content) == '*help') {
             s4dmessage.channel.send({
-                content: String('Hello! I\'m a discord bot made by TanItYT try some of my commands! *ping *who *bad word *help *work')
+                content: String('Hello! I\'m a discord bot made by TanItYT try some of my commands! *ping *who *bad word *help *work akinator')
             });
         }
         if ((s4dmessage.content) == '*uptime') {
             s4dmessage.channel.send({
                 content: String(('My uptime is ' + String(os.sysUptime())))
+            });
+        }
+        if ((s4dmessage.content) == '*name') {
+            s4dmessage.channel.send({
+                content: String((['Hmm are you ', s4dmessage.author, '?'].join('')))
             });
         }
 
@@ -113,6 +122,32 @@
             });
 
             console.log('ran')
+        }
+
+    });
+
+    s4d.client.on('messageCreate', async (s4dmessage) => {
+        if (!((s4dmessage.author).bot)) {
+            arguments2 = (s4dmessage.content).split(' ');
+            command = arguments2.splice(0, 1)[0];
+            if (command == '*akinator') {
+                command = arguments2.splice(0, 1)[0];
+                if (command == 'c') {
+                    gamemode = 'character';
+                } else if (command == 'a') {
+                    gamemode = 'animal';
+                } else if (command == 'o') {
+                    gamemode = 'object';
+                } else {
+                    gamemode = 'character';
+                }
+                akinator(s4dmessage, {
+                    language: "en",
+                    childMode: true,
+                    gameType: gamemode,
+                    useButtons: true
+                })
+            }
         }
 
     });
