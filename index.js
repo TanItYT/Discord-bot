@@ -50,7 +50,7 @@
         console.log(s4d.client.user.tag + " is alive!")
     })
     logs(s4d.client);
-    var arguments2, command, gamemode;
+    var Commands_since_bot_started, arguments2, command, gamemode;
 
 
     await s4d.client.login((process.env.TOKEN)).catch((e) => {
@@ -60,21 +60,25 @@
 
     s4d.client.on('messageCreate', async (s4dmessage) => {
         if ((s4dmessage.content) == '*work') {
+            Commands_since_bot_started = (typeof Commands_since_bot_started == 'number' ? Commands_since_bot_started : 0) + 1;
             s4dmessage.channel.send({
                 content: String('I\'m working!')
             });
         }
         if ((s4dmessage.content) == '*who') {
+            Commands_since_bot_started = (typeof Commands_since_bot_started == 'number' ? Commands_since_bot_started : 0) + 1;
             s4dmessage.channel.send({
                 content: String('Hello! I\'m a discord bot made by TanItYT! I\'m still in development and will improve!')
             });
         }
         if ((s4dmessage.content) == '*ping') {
+            Commands_since_bot_started = (typeof Commands_since_bot_started == 'number' ? Commands_since_bot_started : 0) + 1;
             s4dmessage.channel.send({
                 content: String(('Pong! ' + String(s4d.client.ws.ping)))
             });
         }
         if ((s4dmessage.content) == '*bad word') {
+            Commands_since_bot_started = (typeof Commands_since_bot_started == 'number' ? Commands_since_bot_started : 0) + 1;
             (s4dmessage.author).send({
                 content: String(([':warning: Hello ', s4dmessage.author, ', you sent a message classified as insult in ', s4dmessage.guild, ' saying ', s4dmessage.content, '. Please refrain from this type of language in the future. If this seems like a mistake, try rephrasing what you said to make it less toxic.'].join('')))
             });
@@ -84,18 +88,27 @@
             s4dmessage.delete();
         }
         if ((s4dmessage.content) == '*help') {
+            Commands_since_bot_started = (typeof Commands_since_bot_started == 'number' ? Commands_since_bot_started : 0) + 1;
             s4dmessage.channel.send({
-                content: String('Hello! I\'m a discord bot made by TanItYT try some of my commands! *ping *who *bad word *help *work akinator')
+                content: String('Hello! I\'m a discord bot made by TanItYT try some of my commands! *ping *who *bad word *help *work *akinator *numbercmd')
             });
         }
         if ((s4dmessage.content) == '*uptime') {
+            Commands_since_bot_started = (typeof Commands_since_bot_started == 'number' ? Commands_since_bot_started : 0) + 1;
             s4dmessage.channel.send({
                 content: String(('My uptime is ' + String(os.sysUptime())))
             });
         }
         if ((s4dmessage.content) == '*name') {
+            Commands_since_bot_started = (typeof Commands_since_bot_started == 'number' ? Commands_since_bot_started : 0) + 1;
             s4dmessage.channel.send({
-                content: String((['Hmm are you ', s4dmessage.author, '?'].join('')))
+                content: String((['Hmm is your name ', s4dmessage.author, '?'].join('')))
+            });
+        }
+        if ((s4dmessage.content) == '*numbercmd') {
+            Commands_since_bot_started = (typeof Commands_since_bot_started == 'number' ? Commands_since_bot_started : 0) + 1;
+            s4dmessage.channel.send({
+                content: String(('The commands that have been sent so far since the bot started is ' + String(Commands_since_bot_started)))
             });
         }
 
