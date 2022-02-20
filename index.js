@@ -26,7 +26,7 @@
     const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
     const s4d = {
         Discord,
-        database: new Database(`${devMode ? S4D_NATIVE_GET_PATH : "."}/database.json`),
+        database: new Database(`./database.json`),
         fire: null,
         joiningMember: null,
         reply: null,
@@ -50,12 +50,27 @@
         console.log(s4d.client.user.tag + " is alive!")
     })
     logs(s4d.client);
+
+    function secondsToDhms(seconds) {
+        var days = Math.floor(seconds / (3600 * 24));
+        seconds -= days * 3600 * 24;
+        var hrs = Math.floor(seconds / 3600);
+        seconds -= hrs * 3600;
+        var mnts = Math.floor(seconds / 60);
+        seconds -= mnts * 60;
+        return Math.floor(days) + " days, " + Math.floor(hrs) + " Hrs, " + Math.floor(mnts) + " Minutes, " + Math.floor(seconds) + " Seconds"
+    }
     var Commands_since_bot_started, arguments2, command, gamemode;
 
 
     await s4d.client.login((process.env.TOKEN)).catch((e) => {
         s4d.tokenInvalid = true;
         s4d.tokenError = e;
+        if (e.toString().toLowerCase().includes("token")) {
+            console.log("An invalid token was provided!")
+        } else {
+            console.log("Intents are not turned on!")
+        }
     });
 
     s4d.client.on('messageCreate', async (s4dmessage) => {
@@ -96,7 +111,7 @@
         if ((s4dmessage.content) == '*uptime') {
             Commands_since_bot_started = (typeof Commands_since_bot_started == 'number' ? Commands_since_bot_started : 0) + 1;
             s4dmessage.channel.send({
-                content: String(('My uptime is ' + String(os.sysUptime())))
+                content: String(('My uptime is ' + String(secondsToDhms(os.sysUptime()).toString())))
             });
         }
         if ((s4dmessage.content) == '*name') {
@@ -133,6 +148,7 @@
                     type: "WATCHING"
                 }]
             });
+            await delay(Number(2) * 1000);
 
             console.log('ran')
         }
@@ -163,6 +179,14 @@
             }
         }
 
+    });
+
+    s4d.client.on('guildMemberAdd', async (param1) => {
+        s4d.joiningMember = param1;
+        (s4dmessage.author).send({
+            content: String((['Have a great time here in ', s4d.joiningMember.guild, ' also make sure to read the rules 😉                                      Rules 1.do, not spam (warn) 2.Do not abuse the bots (warn) 3.do not advertise your server unless I told you that you can (kick) 4.do does not say anything mean (kick) 5.do does not give me stupid ideas in #ideas (warn) 6.Do does not swear (ban) 7.Do does not say a single letter in chat (warn) 8. if you have any questions please DM the mod  9.Do not beg for things (warn) 10.Do is not put any more than 30-minute songs in rythm (warn) 11.Make sure to verify that you are not a bot in the server if you do not I will kick/ban you. 12.Follow all discord guidelines https://discord.com/guidelines (ban) 13.If a heated argument arises, a staff member may interject, either with a warning or a mute. Releasing another member’s private or otherwise personal information without their permission is strictly prohibited, and will grant you an immediate ban. (ban) 14.Do did not post any NSFW text or images (ban)'].join('')))
+        });
+        s4d.joiningMember = null
     });
 
     return s4d
