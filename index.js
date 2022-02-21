@@ -18,6 +18,7 @@
     let dootabase = new Database("./database.json")
     const akinator = require("discord.js-akinator");
     const os = require("os-utils");
+    const lyricsFinder = require('lyrics-finder');
     const ms = require("ms")
     let https = require("https")
     require('events').EventEmitter.defaultMaxListeners = 50;
@@ -111,7 +112,7 @@
         if ((s4dmessage.content) == '*uptime') {
             Commands_since_bot_started = (typeof Commands_since_bot_started == 'number' ? Commands_since_bot_started : 0) + 1;
             s4dmessage.channel.send({
-                content: String(('My uptime is ' + String(secondsToDhms(os.sysUptime()).toString())))
+                content: String('Hello! I\'m a discord bot made by TanItYT try some of my commands! *ping *who *bad word *help *work')
             });
         }
         if ((s4dmessage.content) == '*name') {
@@ -123,7 +124,7 @@
         if ((s4dmessage.content) == '*numbercmd') {
             Commands_since_bot_started = (typeof Commands_since_bot_started == 'number' ? Commands_since_bot_started : 0) + 1;
             s4dmessage.channel.send({
-                content: String(('The commands that have been sent so far since the bot started is ' + String(Commands_since_bot_started)))
+                content: String('Hello! I\'m a discord bot made by TanItYT try some of my commands! *ping *who *bad word *help *work')
             });
         }
 
@@ -187,6 +188,67 @@
             content: String((['Have a great time here in ', s4d.joiningMember.guild, ' also make sure to read the rules 😉                                      Rules 1.do, not spam (warn) 2.Do not abuse the bots (warn) 3.do not advertise your server unless I told you that you can (kick) 4.do does not say anything mean (kick) 5.do does not give me stupid ideas in #ideas (warn) 6.Do does not swear (ban) 7.Do does not say a single letter in chat (warn) 8. if you have any questions please DM the mod  9.Do not beg for things (warn) 10.Do is not put any more than 30-minute songs in rythm (warn) 11.Make sure to verify that you are not a bot in the server if you do not I will kick/ban you. 12.Follow all discord guidelines https://discord.com/guidelines (ban) 13.If a heated argument arises, a staff member may interject, either with a warning or a mute. Releasing another member’s private or otherwise personal information without their permission is strictly prohibited, and will grant you an immediate ban. (ban) 14.Do did not post any NSFW text or images (ban)'].join('')))
         });
         s4d.joiningMember = null
+    });
+
+    s4d.client.on('interactionCreate', async (interaction) => {
+        let member = interaction.guild.members.cache.get(interaction.member.user.id)
+        if ((interaction.commandName) == 'work') {
+            Commands_since_bot_started = (typeof Commands_since_bot_started == 'number' ? Commands_since_bot_started : 0) + 1;
+            await interaction.reply({
+                content: 'slash commands is working!',
+                ephemeral: false,
+                components: []
+            });
+        }
+        if ((interaction.commandName) == 'help') {
+            Commands_since_bot_started = (typeof Commands_since_bot_started == 'number' ? Commands_since_bot_started : 0) + 1;
+            await interaction.reply({
+                content: 'Hello! I\'m a discord bot made by TanItYT try some of my commands! /ping /who /bad word /help /work /akinator /numbercmd /onlywork',
+                ephemeral: false,
+                components: []
+            });
+        }
+        if ((interaction.commandName) == 'ping') {
+            Commands_since_bot_started = (typeof Commands_since_bot_started == 'number' ? Commands_since_bot_started : 0) + 1;
+            await interaction.reply({
+                content: ('Pong! ' + String(s4d.client.ws.ping)),
+                ephemeral: false,
+                components: []
+            });
+        }
+        if ((interaction.commandName) == 'uptime') {
+            Commands_since_bot_started = (typeof Commands_since_bot_started == 'number' ? Commands_since_bot_started : 0) + 1;
+            await interaction.reply({
+                content: ('My uptime is ' + String(secondsToDhms(os.sysUptime()).toString())),
+                ephemeral: false,
+                components: []
+            });
+        }
+        if ((interaction.commandName) == 'name') {
+            Commands_since_bot_started = (typeof Commands_since_bot_started == 'number' ? Commands_since_bot_started : 0) + 1;
+            await interaction.reply({
+                content: (['Hmm is your name ', interaction.member.user, '?'].join('')),
+                ephemeral: false,
+                components: []
+            });
+        }
+        if ((interaction.commandName) == 'numbercmd') {
+            Commands_since_bot_started = (typeof Commands_since_bot_started == 'number' ? Commands_since_bot_started : 0) + 1;
+            await interaction.reply({
+                content: ('The commands that have been sent so far since the bot started is ' + String(Commands_since_bot_started)),
+                ephemeral: false,
+                components: []
+            });
+        }
+        if ((interaction.commandName) == 'onlywork') {
+            Commands_since_bot_started = (typeof Commands_since_bot_started == 'number' ? Commands_since_bot_started : 0) + 1;
+            await interaction.reply({
+                content: 'Check the below message',
+                ephemeral: true,
+                components: []
+            });
+        }
+
     });
 
     return s4d
