@@ -19,6 +19,7 @@
     const akinator = require("discord.js-akinator");
     const os = require("os-utils");
     const lyricsFinder = require('lyrics-finder');
+    let URL = require('url')
     const ms = require("ms")
     let https = require("https")
     require('events').EventEmitter.defaultMaxListeners = 50;
@@ -52,14 +53,15 @@
     })
     logs(s4d.client);
 
-    function secondsToDhms(seconds) {
-        var days = Math.floor(seconds / (3600 * 24));
-        seconds -= days * 3600 * 24;
-        var hrs = Math.floor(seconds / 3600);
-        seconds -= hrs * 3600;
-        var mnts = Math.floor(seconds / 60);
-        seconds -= mnts * 60;
-        return Math.floor(days) + " days, " + Math.floor(hrs) + " Hrs, " + Math.floor(mnts) + " Minutes, " + Math.floor(seconds) + " Seconds"
+    function dhm(ms) {
+        const days = Math.floor(ms / (24 * 60 * 60 * 1000));
+        const daysms = ms % (24 * 60 * 60 * 1000);
+        const hours = Math.floor(daysms / (60 * 60 * 1000));
+        const hoursms = ms % (60 * 60 * 1000);
+        const minutes = Math.floor(hoursms / (60 * 1000));
+        const minutesms = ms % (60 * 1000);
+        const sec = Math.floor(minutesms / 1000);
+        return days + " days, " + hours + " Hrs, " + minutes + " Minutes, " + sec + " Seconds"
     }
     var Commands_since_bot_started, arguments2, command, gamemode;
 
@@ -68,9 +70,9 @@
         s4d.tokenInvalid = true;
         s4d.tokenError = e;
         if (e.toString().toLowerCase().includes("token")) {
-            console.log("An invalid token was provided!")
+            throw new Error("An invalid token was provided!")
         } else {
-            console.log("Intents are not turned on!")
+            throw new Error("Intents are not turned on!")
         }
     });
 
@@ -106,7 +108,7 @@
         if ((s4dmessage.content) == '*help') {
             Commands_since_bot_started = (typeof Commands_since_bot_started == 'number' ? Commands_since_bot_started : 0) + 1;
             s4dmessage.channel.send({
-                content: String('Hello! I\'m a discord bot made by TanItYT try some of my commands! *ping *who *bad word *help *work *akinator *numbercmd')
+                content: String('Hello! I\'m a discord bot made by TanItYT try some of my commands! *ping *who *bad word *help *work *akinator *numbercmd *issue')
             });
         }
         if ((s4dmessage.content) == '*uptime') {
@@ -125,6 +127,18 @@
             Commands_since_bot_started = (typeof Commands_since_bot_started == 'number' ? Commands_since_bot_started : 0) + 1;
             s4dmessage.channel.send({
                 content: String('Hello! I\'m a discord bot made by TanItYT try some of my commands! *ping *who *bad word *help *work')
+            });
+        }
+        if ((s4dmessage.content) == '*code') {
+            Commands_since_bot_started = (typeof Commands_since_bot_started == 'number' ? Commands_since_bot_started : 0) + 1;
+            s4dmessage.channel.send({
+                content: String('https://github.com/TanItYT/Discord-bot')
+            });
+        }
+        if ((s4dmessage.content) == '*issue') {
+            Commands_since_bot_started = (typeof Commands_since_bot_started == 'number' ? Commands_since_bot_started : 0) + 1;
+            s4dmessage.channel.send({
+                content: String('https://github.com/TanItYT/Discord-bot/issues/new')
             });
         }
 
@@ -184,7 +198,7 @@
 
     s4d.client.on('guildMemberAdd', async (param1) => {
         s4d.joiningMember = param1;
-        (s4dmessage.author).send({
+        (s4d.joiningMember).send({
             content: String((['Have a great time here in ', s4d.joiningMember.guild, ' also make sure to read the rules 😉                                      Rules 1.do, not spam (warn) 2.Do not abuse the bots (warn) 3.do not advertise your server unless I told you that you can (kick) 4.do does not say anything mean (kick) 5.do does not give me stupid ideas in #ideas (warn) 6.Do does not swear (ban) 7.Do does not say a single letter in chat (warn) 8. if you have any questions please DM the mod  9.Do not beg for things (warn) 10.Do is not put any more than 30-minute songs in rythm (warn) 11.Make sure to verify that you are not a bot in the server if you do not I will kick/ban you. 12.Follow all discord guidelines https://discord.com/guidelines (ban) 13.If a heated argument arises, a staff member may interject, either with a warning or a mute. Releasing another member’s private or otherwise personal information without their permission is strictly prohibited, and will grant you an immediate ban. (ban) 14.Do did not post any NSFW text or images (ban)'].join('')))
         });
         s4d.joiningMember = null
@@ -203,7 +217,7 @@
         if ((interaction.commandName) == 'help') {
             Commands_since_bot_started = (typeof Commands_since_bot_started == 'number' ? Commands_since_bot_started : 0) + 1;
             await interaction.reply({
-                content: 'Hello! I\'m a discord bot made by TanItYT try some of my commands! /ping /who /bad word /help /work /akinator /numbercmd /onlywork',
+                content: 'Hello! I\'m a discord bot made by TanItYT try some of my commands! /ping /who /bad word /help /work /akinator /numbercmd /onlywork /issue /youtube /twitter /meme',
                 ephemeral: false,
                 components: []
             });
@@ -219,7 +233,7 @@
         if ((interaction.commandName) == 'uptime') {
             Commands_since_bot_started = (typeof Commands_since_bot_started == 'number' ? Commands_since_bot_started : 0) + 1;
             await interaction.reply({
-                content: ('My uptime is ' + String(secondsToDhms(os.sysUptime()).toString())),
+                content: ('My uptime is ' + String(dhm(os.sysUptime()).toString())),
                 ephemeral: false,
                 components: []
             });
@@ -247,6 +261,70 @@
                 ephemeral: true,
                 components: []
             });
+        }
+        if ((interaction.commandName) == 'onlywork') {
+            Commands_since_bot_started = (typeof Commands_since_bot_started == 'number' ? Commands_since_bot_started : 0) + 1;
+            await interaction.reply({
+                content: 'Check the below message',
+                ephemeral: true,
+                components: []
+            });
+        }
+        if ((interaction.commandName) == 'code') {
+            Commands_since_bot_started = (typeof Commands_since_bot_started == 'number' ? Commands_since_bot_started : 0) + 1;
+            await interaction.reply({
+                content: 'https://github.com/TanItYT/Discord-bot',
+                ephemeral: false,
+                components: []
+            });
+        }
+        if ((interaction.commandName) == 'issue') {
+            Commands_since_bot_started = (typeof Commands_since_bot_started == 'number' ? Commands_since_bot_started : 0) + 1;
+            await interaction.reply({
+                content: 'https://github.com/TanItYT/Discord-bot/issues/new',
+                ephemeral: false,
+                components: []
+            });
+        }
+        if ((interaction.commandName) == 'youtube') {
+            Commands_since_bot_started = (typeof Commands_since_bot_started == 'number' ? Commands_since_bot_started : 0) + 1;
+            await interaction.reply({
+                content: 'https://www.youtube.com/tanityt',
+                ephemeral: false,
+                components: []
+            });
+        }
+        if ((interaction.commandName) == 'twitter') {
+            Commands_since_bot_started = (typeof Commands_since_bot_started == 'number' ? Commands_since_bot_started : 0) + 1;
+            await interaction.reply({
+                content: 'https://twitter.com/TanitYTreal',
+                ephemeral: false,
+                components: []
+            });
+        }
+        if ((interaction.commandName) == 'meme') {
+            Commands_since_bot_started = (typeof Commands_since_bot_started == 'number' ? Commands_since_bot_started : 0) + 1;
+
+            const musakui = require('musakui');
+            musakui('memes')
+                .then(result => {
+                    var postTitle = result.title
+                    var postUrl = result.reddit_url
+                    var postImg = result.media_url
+                    var postUpvotes = result.upvotes
+                    var postComs = result.comments
+                    let embed = new Discord.MessageEmbed()
+                    embed.setColor('#ff0000');
+                    embed.setTitle((postTitle))
+                        .setURL((postUrl));
+                    embed.setImage((postImg));
+                    (interaction.channel).send({
+                        embeds: [embed]
+                    });
+
+
+                })
+                .catch(error => console.log(error));
         }
 
     });
