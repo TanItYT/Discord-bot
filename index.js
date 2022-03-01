@@ -326,6 +326,14 @@
                 })
                 .catch(error => console.log(error));
         }
+        if ((interaction.commandName) == 'about') {
+            Commands_since_bot_started = (typeof Commands_since_bot_started == 'number' ? Commands_since_bot_started : 0) + 1;
+            await interaction.reply({
+                content: 'https://cdn.discordapp.com/attachments/892936801231179810/948106777629712384/unknown.png',
+                ephemeral: false,
+                components: []
+            });
+        }
 
     });
 
