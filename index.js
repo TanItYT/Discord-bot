@@ -82,11 +82,17 @@
             s4dmessage.channel.send({
                 content: String('I\'m working!')
             });
+            s4dmessage.channel.send({
+                content: String('Our bot is moving to slash commands please us them next time!')
+            });
         }
         if ((s4dmessage.content) == '*who') {
             Commands_since_bot_started = (typeof Commands_since_bot_started == 'number' ? Commands_since_bot_started : 0) + 1;
             s4dmessage.channel.send({
                 content: String('Hello! I\'m a discord bot made by TanItYT! I\'m still in development and will improve!')
+            });
+            s4dmessage.channel.send({
+                content: String('Our bot is moving to slash commands please us them next time!')
             });
         }
         if ((s4dmessage.content) == '*ping') {
@@ -94,11 +100,14 @@
             s4dmessage.channel.send({
                 content: String(('Pong! ' + String(s4d.client.ws.ping)))
             });
+            s4dmessage.channel.send({
+                content: String('Our bot is moving to slash commands please us them next time!')
+            });
         }
         if ((s4dmessage.content) == '*bad word') {
             Commands_since_bot_started = (typeof Commands_since_bot_started == 'number' ? Commands_since_bot_started : 0) + 1;
             (s4dmessage.author).send({
-                content: String(([':warning: Hello ', s4dmessage.author, ', you sent a message classified as insult in ', s4dmessage.guild, ' saying ', s4dmessage.content, '. Please refrain from this type of language in the future. If this seems like a mistake, try rephrasing what you said to make it less toxic.'].join('')))
+                content: String(([':warning: Hello ', s4dmessage.author, ', you sent a message classified as insult in ', s4dmessage.guild, ' saying || ', s4dmessage.content, ' ||. Please refrain from this type of language in the future. If this seems like a mistake, try rephrasing what you said to make it less toxic.'].join('')))
             });
             s4d.client.channels.cache.get('921786095161704449').send({
                 content: String(([s4dmessage.author, ' Has said a bad word ', s4dmessage.content].join('')))
@@ -110,11 +119,17 @@
             s4dmessage.channel.send({
                 content: String('Hello! I\'m a discord bot made by TanItYT try some of my commands! *ping *who *bad word *help *work *akinator *numbercmd *issue')
             });
+            s4dmessage.channel.send({
+                content: String('Our bot is moving to slash commands please us them next time!')
+            });
         }
         if ((s4dmessage.content) == '*uptime') {
             Commands_since_bot_started = (typeof Commands_since_bot_started == 'number' ? Commands_since_bot_started : 0) + 1;
             s4dmessage.channel.send({
                 content: String('Hello! I\'m a discord bot made by TanItYT try some of my commands! *ping *who *bad word *help *work')
+            });
+            s4dmessage.channel.send({
+                content: String('Our bot is moving to slash commands please us them next time!')
             });
         }
         if ((s4dmessage.content) == '*name') {
@@ -122,11 +137,17 @@
             s4dmessage.channel.send({
                 content: String((['Hmm is your name ', s4dmessage.author, '?'].join('')))
             });
+            s4dmessage.channel.send({
+                content: String('Our bot is moving to slash commands please us them next time!')
+            });
         }
         if ((s4dmessage.content) == '*numbercmd') {
             Commands_since_bot_started = (typeof Commands_since_bot_started == 'number' ? Commands_since_bot_started : 0) + 1;
             s4dmessage.channel.send({
                 content: String('Hello! I\'m a discord bot made by TanItYT try some of my commands! *ping *who *bad word *help *work')
+            });
+            s4dmessage.channel.send({
+                content: String('Our bot is moving to slash commands please us them next time!')
             });
         }
         if ((s4dmessage.content) == '*code') {
@@ -134,11 +155,17 @@
             s4dmessage.channel.send({
                 content: String('https://github.com/TanItYT/Discord-bot')
             });
+            s4dmessage.channel.send({
+                content: String('Our bot is moving to slash commands please us them next time!')
+            });
         }
         if ((s4dmessage.content) == '*issue') {
             Commands_since_bot_started = (typeof Commands_since_bot_started == 'number' ? Commands_since_bot_started : 0) + 1;
             s4dmessage.channel.send({
                 content: String('https://github.com/TanItYT/Discord-bot/issues/new')
+            });
+            s4dmessage.channel.send({
+                content: String('Our bot is moving to slash commands please us them next time!')
             });
         }
 
@@ -334,6 +361,20 @@
                 components: []
             });
         }
+
+    });
+
+    s4d.client.on('channelUpdate', async (oldChannel, newChannel) => {
+        s4d.client.channels.cache.get('921786095161704449').send({
+            content: String((['The channel ', oldChannel.name, ' has been updated to ', newChannel.name].join('')))
+        });
+
+    });
+
+    s4d.client.on('channelDelete', async (channel) => {
+        s4d.client.channels.cache.get('921786095161704449').send({
+            content: String((['The channel ', channel.name, ' has been deleted'].join('')))
+        });
 
     });
 
