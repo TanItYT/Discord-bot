@@ -185,7 +185,7 @@
             s4d.client.user.setPresence({
                 status: "online",
                 activities: [{
-                    name: 'https://discord.gg/fm6yYjw',
+                    name: 'https://twitter.com/TanitYTreal',
                     type: "WATCHING"
                 }]
             });
@@ -367,6 +367,18 @@
                 ephemeral: false,
                 components: []
             });
+        }
+        if ((interaction.commandName) == 'yttogether') {
+            Commands_since_bot_started = (typeof Commands_since_bot_started == 'number' ? Commands_since_bot_started : 0) + 1;
+            let embed = new Discord.MessageEmbed()
+            embed.setTitle('Click here to start watch together!')
+                .setURL('https://discord.gg/m5D74QUMs4');
+            await interaction.reply({
+                embeds: [(embed)],
+                ephemeral: false,
+                components: []
+            });
+
         }
 
     });
