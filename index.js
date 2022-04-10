@@ -4,6 +4,7 @@
         console.log(`𝕖𝕣𝕣𝕠𝕣❕`);
         console.log(err);
     });
+    const events = require('events');
     let Discord = require("discord.js")
     let Database = require("easy-json-database")
     let {
@@ -15,14 +16,12 @@
         MessageSelectMenu
     } = require("discord.js")
     let logs = require("discord-logs")
-    let dootabase = new Database("./database.json")
     const akinator = require("discord.js-akinator");
     const os = require("os-utils");
     const lyricsFinder = require('lyrics-finder');
     let URL = require('url')
     const ms = require("ms")
     let https = require("https")
-    require('events').EventEmitter.defaultMaxListeners = 50;
     let fs = require('fs');
     const devMode = typeof __E_IS_DEV !== "undefined" && __E_IS_DEV;
     const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -110,7 +109,7 @@
                 content: String(([':warning: Hello ', s4dmessage.author, ', you sent a message classified as insult in ', s4dmessage.guild, ' saying || ', s4dmessage.content, ' ||. Please refrain from this type of language in the future. If this seems like a mistake, try rephrasing what you said to make it less toxic.'].join('')))
             });
             s4d.client.channels.cache.get('921786095161704449').send({
-                content: String(([s4dmessage.author, ' Has said a bad word ', s4dmessage.content].join('')))
+                content: String(([s4dmessage.author, ' Has said a bad word || ', s4dmessage.content, ' ||.'].join('')))
             });
             s4dmessage.delete();
         }
@@ -186,7 +185,7 @@
             s4d.client.user.setPresence({
                 status: "online",
                 activities: [{
-                    name: 'https://twitter.com/TanitYTreal',
+                    name: 'https://discord.gg/fm6yYjw',
                     type: "WATCHING"
                 }]
             });
@@ -260,7 +259,7 @@
         if ((interaction.commandName) == 'uptime') {
             Commands_since_bot_started = (typeof Commands_since_bot_started == 'number' ? Commands_since_bot_started : 0) + 1;
             await interaction.reply({
-                content: ('My uptime is ' + String(dhm(os.sysUptime()).toString())),
+                content: (['My uptime is ', dhm(os.sysUptime()).toString(), ' || NOT ALWAYS ACCURATE ||'].join('')),
                 ephemeral: false,
                 components: []
             });
@@ -357,6 +356,14 @@
             Commands_since_bot_started = (typeof Commands_since_bot_started == 'number' ? Commands_since_bot_started : 0) + 1;
             await interaction.reply({
                 content: 'https://cdn.discordapp.com/attachments/892936801231179810/948106777629712384/unknown.png',
+                ephemeral: false,
+                components: []
+            });
+        }
+        if ((interaction.commandName) == 'teststring') {
+            Commands_since_bot_started = (typeof Commands_since_bot_started == 'number' ? Commands_since_bot_started : 0) + 1;
+            await interaction.reply({
+                content: 'Line 1 \\n Line 2',
                 ephemeral: false,
                 components: []
             });
