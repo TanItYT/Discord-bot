@@ -243,7 +243,7 @@
         if ((interaction.commandName) == 'help') {
             Commands_since_bot_started = (typeof Commands_since_bot_started == 'number' ? Commands_since_bot_started : 0) + 1;
             await interaction.reply({
-                content: 'Hello! I\'m a discord bot made by TanItYT try some of my commands! /ping /who /bad word /help /work /akinator /numbercmd /onlywork /issue /youtube /twitter /meme',
+                content: 'Hello! I\'m a discord bot made by TanItYT try some of my commands!',
                 ephemeral: false,
                 components: []
             });
