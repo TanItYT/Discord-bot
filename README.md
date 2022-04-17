@@ -1,7 +1,7 @@
 # Discord-bot
 This is my discord bot in my discord server! 
 LINK TO INVITE BOT 
-https://discord.com/api/oauth2/authorize?client_id=939539161260654652&amp;permissions=8&amp;scope=bot
+https://discord.com/api/oauth2/authorize?client_id=939539161260654652&permissions=8&scope=bot%20applications.commands
 # About the project
 This github page was created to track the progress of my discord bot, see its changes and for people to see how I code it
 I usally code using https://www.scratch-for-discord.com/ which is a useful tool to make code easy to understand but still has its flaws but overall great still good and I host the bot using repilt.com.
